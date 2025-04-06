@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive To-Do List</title>
+  <style>
+    /* Basic styling for the to-do list */
+    body {
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .todo-container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      margin-bottom: 1.5rem;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 0.5rem;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      margin-left: 0.5rem;
+      border: none;
+      background-color: #0066cc;
+      color: #fff;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #004c99;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .todo-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fafafa;
+      border: 1px solid #ddd;
+      padding: 0.75rem;
+      border-radius: 4px;
+      margin-bottom: 0.75rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .todo-item.completed {
+      text-decoration: line-through;
+      color: #777;
+      background-color: #e0e0e0;
+    }
+
+    .todo-item button {
+      background-color: transparent;
+      color: #cc0000;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .todo-item button:hover {
+      color: #990000;
+    }
+  </style>
+</head>
+<body>
+  <div class="todo-container">
+    <h1>My To-Do List</h1>
+    <form id="todo-form">
+      <input type="text" id="todo-input" placeholder="Add a new task..." required />
+      <button type="submit">Add</button>
+    </form>
+    <ul id="todo-list">
+      <!-- To-do items will appear here -->
+    </ul>
+  </div>
+
+  <script>
+    const form = document.getElementById('todo-form');
+    const todoInput = document.getElementById('todo-input');
+    const todoList = document.getElementById('todo-list');
+
+    // Function to add a new to-do item
+    function addTodo(task) {
+      // Create list item elements
+      const li = document.createElement('li');
+      li.classList.add('todo-item');
+
+      const span = document.createElement('span');
+      span.textContent = task;
+
+      // Toggle completion on click of the task
+      span.addEventListener('click', () => {
+        li.classList.toggle('completed');
+      });
+
+      // Create delete button
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = 'X';
+      deleteBtn.addEventListener('click', () => {
+        todoList.removeChild(li);
+      });
+
+      li.appendChild(span);
+      li.appendChild(deleteBtn);
+      todoList.appendChild(li);
+    }
+
+    // Listen for form submission to add new tasks
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const task = todoInput.value.trim();
+      if (task !== "") {
+        addTodo(task);
+        todoInput.value = '';
+        todoInput.focus();
+      }
+    });
+  </script>
+</body>
+</html>
